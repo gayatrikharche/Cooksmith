@@ -1,4 +1,4 @@
-# Cooksmith 🔪🤖
+# Cooksmith
 
 **Cooksmith** is an AI-powered culinary agent that transforms recipes using multi-step LLM workflows. Inspired by Anthropic's agentic design patterns, Cooksmith routes recipes through specialized agents like health optimizers, cultural remixers, and narrative storytellers — and evaluates or refines them to meet user-defined goals.
 
