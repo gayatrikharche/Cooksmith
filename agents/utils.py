@@ -1,5 +1,3 @@
-# agents/utils.py
-
 import zipfile
 import os
 import fitz  # PyMuPDF
@@ -15,23 +13,22 @@ def unzip_recipes(zip_path: str, extract_to: str = "data/raw/") -> None:
 
 def extract_text_from_pdfs(raw_dir: str = "data/raw/", out_dir: str = "data/parsed/") -> None:
     """
-    Extracts text from each PDF in raw_dir and saves it as a .txt file in out_dir.
+    Recursively extracts text from all PDFs in raw_dir and saves as .txt in out_dir.
     """
     os.makedirs(out_dir, exist_ok=True)
-    for filename in os.listdir(raw_dir):
-        if filename.endswith(".pdf"):
-            pdf_path = os.path.join(raw_dir, filename)
-            txt_path = os.path.join(out_dir, filename.replace(".pdf", ".txt"))
+    for root, _, files in os.walk(raw_dir):
+        for filename in files:
+            if filename.endswith(".pdf"):
+                pdf_path = os.path.join(root, filename)
+                txt_path = os.path.join(out_dir, filename.replace(".pdf", ".txt"))
 
-            with fitz.open(pdf_path) as doc:
-                text = ""
-                for page in doc:
-                    text += page.get_text()
+                with fitz.open(pdf_path) as doc:
+                    text = "".join(page.get_text() for page in doc)
 
-            with open(txt_path, "w", encoding="utf-8") as f:
-                f.write(text)
+                with open(txt_path, "w", encoding="utf-8") as f:
+                    f.write(text)
 
-            print(f"📄 Extracted: {filename} → {txt_path}")
+                print(f"📄 Extracted: {filename} → {txt_path}")
 
 def load_recipe(file_path: str) -> str:
     """
