@@ -1,67 +1,120 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function App() {
   const [recipeText, setRecipeText] = useState("");
-  const [transformedText, setTransformedText] = useState("");
+  const [transformed, setTransformed] = useState("");
   const [goal, setGoal] = useState("healthy");
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [structuredJSON, setStructuredJSON] = useState("");
+
+  const handleTransform = async () => {
+    const form = new FormData();
+    form.append("recipe_text", recipeText);
+    form.append("goal", goal);
+
+    const res = await axios.post<{ transformed: string }>(
+      "http://localhost:8000/transform_explain",
+      form
+    );
+
+    setTransformed(res.data.transformed);
+  };
+
+  const handleAsk = async () => {
+    const form = new FormData();
+    form.append("recipe_json", structuredJSON);
+    form.append("question", question);
+
+    const res = await axios.post<{ answer: string }>(
+      "http://localhost:8000/ask",
+      form
+    );
+
+    setAnswer(res.data.answer);
+  };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-amber-50 to-lime-100 p-4">
-      <div className="text-center py-10">
-        <h1 className="text-5xl font-extrabold tracking-tight text-lime-700">
-          🧠 Cooksmith
-        </h1>
-        <p className="text-gray-600 mt-2 text-xl">
-          Transform your recipes with AI: Healthy, Fusion, or Fairytale-style.
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-lime-100 p-6 font-sans">
+      <header className="text-center mb-10">
+        <h1 className="text-5xl font-extrabold text-lime-700">🧠 Cooksmith</h1>
+        <p className="text-gray-600 text-xl mt-2">
+          Transform & explore recipes using AI: healthy, fusion, or fantastical.
         </p>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 max-w-5xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-6">
-          <h2 className="text-2xl font-semibold mb-4">📤 Upload Recipes</h2>
-          <input type="file" accept=".zip" className="file-input" />
-          <p className="text-sm text-muted-foreground mt-2">
-            Upload a ZIP of recipe PDFs
-          </p>
-          <button className="mt-4 bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
-            Upload & Parse
-          </button>
-        </div>
+      <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <div className="bg-white p-6 rounded-2xl shadow-lg">
+          <h2 className="text-2xl font-semibold mb-3">📋 Paste Recipe Text</h2>
+          <textarea
+            className="w-full h-56 border p-3 rounded"
+            placeholder="Paste recipe here..."
+            value={recipeText}
+            onChange={(e) => setRecipeText(e.target.value)}
+          />
 
-        <div className="bg-white rounded-2xl shadow-xl p-6">
-          <h2 className="text-2xl font-semibold mb-4">🎯 Choose Transformation</h2>
+          <label className="block mt-4 font-medium">🎯 Transformation Goal:</label>
           <select
-            className="w-full p-2 border rounded"
+            className="w-full mt-1 p-2 border rounded"
             value={goal}
             onChange={(e) => setGoal(e.target.value)}
           >
             <option value="healthy">Healthy</option>
-            <option value="story">Story</option>
             <option value="fusion">Fusion</option>
+            <option value="story">Fairytale</option>
           </select>
-          <button className="mt-4 bg-lime-600 text-white px-4 py-2 rounded hover:bg-lime-700">
-            Transform Selected
+
+          <button
+            className="mt-4 bg-lime-600 hover:bg-lime-700 text-white px-4 py-2 rounded"
+            onClick={handleTransform}
+          >
+            🔁 Transform Recipe
           </button>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow-lg">
+          <h2 className="text-2xl font-semibold mb-3">🧠 Transformed Output</h2>
+          <textarea
+            className="w-full h-72 border p-3 rounded bg-green-50"
+            readOnly
+            value={transformed}
+          />
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-12">
-        <h3 className="text-xl font-bold mb-2">🪞 Output Viewer</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="max-w-6xl mx-auto mt-12 grid md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-2xl shadow-lg">
+          <h2 className="text-xl font-semibold mb-2">🔍 Structured JSON (for Q&A)</h2>
           <textarea
-            placeholder="Original Recipe..."
-            className="w-full h-64 p-4 border rounded"
-            value={recipeText}
-            onChange={(e) => setRecipeText(e.target.value)}
+            className="w-full h-60 border p-3 font-mono text-xs rounded"
+            placeholder="Paste parsed recipe JSON here..."
+            value={structuredJSON}
+            onChange={(e) => setStructuredJSON(e.target.value)}
           />
-          <textarea
-            placeholder="Transformed Recipe..."
-            className="w-full h-64 p-4 border rounded bg-green-50"
-            value={transformedText}
-            readOnly
+
+          <input
+            className="w-full mt-4 p-2 border rounded"
+            placeholder="Ask a question about this recipe..."
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
           />
+
+          <button
+            className="mt-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded"
+            onClick={handleAsk}
+          >
+            ❓ Ask AI
+          </button>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow-lg">
+          <h2 className="text-xl font-semibold mb-2">💡 AI Answer</h2>
+          <div className="whitespace-pre-wrap bg-blue-50 h-60 p-4 rounded overflow-y-scroll">
+            {answer || "AI will answer your question here."}
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
