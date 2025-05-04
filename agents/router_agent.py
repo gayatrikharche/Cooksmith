@@ -1,5 +1,16 @@
 from agents.llm_client import call_llm
 
+def route_recipe(recipe_text: str, goal: str) -> str:
+    goal = goal.strip().lower()
+    if goal == "healthy":
+        return _health_optimizer(recipe_text)
+    elif goal == "story":
+        return _storyteller(recipe_text)
+    elif goal == "fusion":
+        return _fusion_transformer(recipe_text)
+    else:
+        return f" Unsupported goal: '{goal}'. Please choose from: healthy, story, or fusion."
+
 def _health_optimizer(recipe: str) -> str:
     prompt = (
         "You are a nutritionist chef. Rewrite this recipe to be healthier. "
