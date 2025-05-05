@@ -1,13 +1,22 @@
-# Core LLM integration
+# === Web Server ===
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+
+# === LLM Integration ===
 google-generativeai>=0.3.2
 
-# Environment variables
-python-dotenv>=1.0.1
-
-# PDF parsing
+# === PDF Parsing ===
 PyMuPDF>=1.23.7
 
-# Frontend
-streamlit>=1.30.0
+# === Environment Handling ===
+python-dotenv>=1.0.1
 
-sqlalchemy
+# === File Uploads & Async I/O ===
+python-multipart>=0.0.9
+aiofiles>=23.2.1
+
+# === Database ===
+sqlalchemy>=2.0.30
+
+# === CORS (Cross-Origin Requests) ===
+starlette>=0.36.3
