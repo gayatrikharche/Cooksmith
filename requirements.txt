@@ -9,3 +9,5 @@ PyMuPDF>=1.23.7
 
 # Frontend
 streamlit>=1.30.0
+
+sqlalchemy
