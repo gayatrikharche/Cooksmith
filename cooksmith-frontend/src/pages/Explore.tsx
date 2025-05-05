@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function Explore() {
   const [structuredJSON, setStructuredJSON] = useState("");
   const [question, setQuestion] = useState("");
@@ -13,7 +15,7 @@ export default function Explore() {
     const form = new FormData();
     form.append("recipe_json", structuredJSON);
     form.append("question", question);
-    const res = await axios.post<{ answer: string }>("http://localhost:8000/ask", form);
+    const res = await axios.post<{ answer: string }>(`${BASE_URL}/ask`, form);
     setAnswer(res.data.answer);
   };
 
@@ -44,7 +46,7 @@ export default function Explore() {
         onClick={handleAsk}
         className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full shadow-md transition"
       >
-         Ask AI
+        ❓ Ask AI
       </button>
 
       {answer && (

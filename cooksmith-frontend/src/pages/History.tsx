@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 interface RecipeHistoryEntry {
   id: number;
   original_name: string;
@@ -15,8 +17,6 @@ interface QuestionHistoryEntry {
   answer: string;
   recipe_json: string;
 }
-
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function History() {
   const [recipes, setRecipes] = useState<RecipeHistoryEntry[]>([]);
