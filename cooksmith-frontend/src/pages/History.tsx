@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 interface RecipeHistoryEntry {
   id: number;
@@ -32,17 +33,22 @@ export default function History() {
   }, []);
 
   return (
-    <div className="space-y-10">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="space-y-10"
+    >
       <div>
         <h2 className="text-3xl font-bold text-lime-700 mb-4">📜 Transformation History</h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-6">
           {recipes.map((r) => (
-            <div key={r.id} className="bg-white rounded-xl shadow p-4">
-              <h3 className="text-lg font-semibold text-lime-800 mb-1">{r.original_name}</h3>
-              <p className="text-sm text-gray-600 mb-2">Goal: {r.goal}</p>
-              <div className="text-sm text-gray-800 whitespace-pre-wrap line-clamp-6">
+            <div key={r.id} className="bg-white rounded-xl shadow-md p-5 border border-stone-200">
+              <h3 className="text-lg font-bold text-amber-700 mb-1">{r.original_name}</h3>
+              <p className="text-sm text-stone-600 mb-2">Goal: {r.goal}</p>
+              <pre className="text-sm text-stone-800 whitespace-pre-wrap line-clamp-6">
                 {r.transformed_text}
-              </div>
+              </pre>
             </div>
           ))}
         </div>
@@ -50,15 +56,15 @@ export default function History() {
 
       <div>
         <h2 className="text-3xl font-bold text-blue-700 mb-4">💬 Q&A History</h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-6">
           {questions.map((q) => (
-            <div key={q.id} className="bg-white rounded-xl shadow p-4">
-              <p className="text-sm text-gray-700 font-semibold mb-1">Q: {q.question}</p>
-              <p className="text-sm text-gray-600 italic">A: {q.answer}</p>
+            <div key={q.id} className="bg-white rounded-xl shadow-md p-5 border border-stone-200">
+              <p className="text-sm text-stone-800 font-semibold mb-1">Q: {q.question}</p>
+              <p className="text-sm text-stone-600 italic">A: {q.answer}</p>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
