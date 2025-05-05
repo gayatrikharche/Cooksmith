@@ -44,7 +44,7 @@ export default function Explore() {
         onClick={handleAsk}
         className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full shadow-md transition"
       >
-        ❓ Ask AI
+         Ask AI
       </button>
 
       {answer && (

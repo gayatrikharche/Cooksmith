@@ -1,5 +1,3 @@
-// src/pages/History.tsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -18,17 +16,19 @@ interface QuestionHistoryEntry {
   recipe_json: string;
 }
 
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 export default function History() {
   const [recipes, setRecipes] = useState<RecipeHistoryEntry[]>([]);
   const [questions, setQuestions] = useState<QuestionHistoryEntry[]>([]);
 
   useEffect(() => {
     axios
-      .get<RecipeHistoryEntry[]>("http://localhost:8000/recipes")
+      .get<RecipeHistoryEntry[]>(`${BASE_URL}/recipes`)
       .then((res) => setRecipes(res.data));
 
     axios
-      .get<QuestionHistoryEntry[]>("http://localhost:8000/questions")
+      .get<QuestionHistoryEntry[]>(`${BASE_URL}/questions`)
       .then((res) => setQuestions(res.data));
   }, []);
 

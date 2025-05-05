@@ -1,8 +1,8 @@
-// src/pages/Home.tsx
-
 import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export default function Home() {
   const [recipeText, setRecipeText] = useState("");
@@ -13,7 +13,7 @@ export default function Home() {
     const form = new FormData();
     form.append("recipe_text", recipeText);
     form.append("goal", goal);
-    const res = await axios.post<{ transformed: string }>("http://localhost:8000/transform_explain", form);
+    const res = await axios.post<{ transformed: string }>(`${BASE_URL}/transform_explain`, form);
     setTransformed(res.data.transformed);
   };
 
