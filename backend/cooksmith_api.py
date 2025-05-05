@@ -22,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- 1. Upload a ZIP file of PDFs and process them ---
+# --- Upload and Parse ZIP of Recipes ---
 @app.post("/upload")
 def upload_zip(file: UploadFile):
     zip_path = "data/recipes_data.zip"
@@ -32,12 +32,11 @@ def upload_zip(file: UploadFile):
     extract_text_from_pdfs()
     return {"message": "✅ Uploaded and parsed successfully."}
 
-# --- 2. Transform a recipe with explanation ---
+# --- Transform a Recipe ---
 @app.post("/transform_explain")
 def transform_recipe(recipe_text: str = Form(...), goal: str = Form(...)):
     result = route_recipe(recipe_text, goal)
     
-    # Save to database
     db = SessionLocal()
     db_obj = TransformedRecipe(
         original_name="user_paste",
@@ -50,7 +49,7 @@ def transform_recipe(recipe_text: str = Form(...), goal: str = Form(...)):
 
     return {"transformed": result}
 
-# --- 3. Ask a question about a structured recipe JSON ---
+# --- Ask a Question ---
 @app.post("/ask")
 def ask_question(recipe_json: str = Form(...), question: str = Form(...)):
     prompt = (
@@ -60,7 +59,6 @@ def ask_question(recipe_json: str = Form(...), question: str = Form(...)):
     )
     answer = call_llm(prompt)
 
-    # Save to database
     db = SessionLocal()
     db_obj = RecipeQnA(
         question=question,
@@ -72,3 +70,35 @@ def ask_question(recipe_json: str = Form(...), question: str = Form(...)):
     db.close()
 
     return {"answer": answer}
+
+# --- Get All Transformed Recipes ---
+@app.get("/recipes")
+def get_all_transformed():
+    db = SessionLocal()
+    results = db.query(TransformedRecipe).all()
+    db.close()
+    return [
+        {
+            "id": r.id,
+            "original_name": r.original_name,
+            "goal": r.goal,
+            "transformed_text": r.transformed_text
+        }
+        for r in results
+    ]
+
+# --- Get All Q&A Records ---
+@app.get("/questions")
+def get_all_questions():
+    db = SessionLocal()
+    results = db.query(RecipeQnA).all()
+    db.close()
+    return [
+        {
+            "id": q.id,
+            "question": q.question,
+            "answer": q.answer,
+            "recipe_json": q.recipe_json
+        }
+        for q in results
+    ]
