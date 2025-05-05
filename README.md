@@ -4,17 +4,17 @@ Cooksmith is a creative document processing app that ingests PDF recipes, parses
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔍 Extract and parse recipe PDFs
-- 🧠 Transform recipes: Healthy | Fusion | Fairytale
-- ❓ Ask questions about recipes using structured data
-- 🖼️ Beautiful UI with animations, visual background, and side-by-side panels
-- 🗃️ SQLite database for transformation & Q&A history
+-  Extract and parse recipe PDFs
+-  Transform recipes: Healthy | Fusion | Fairytale
+-  Ask questions about recipes using structured data
+-  Beautiful UI with animations, visual background, and side-by-side panels
+-  SQLite database for transformation & Q&A history
 
 ---
 
-## 🧱 Project Structure
+## Project Structure
 
 ```
 Cooksmith/
@@ -43,9 +43,9 @@ Cooksmith/
 
 ---
 
-## 🚀 Setup Instructions
+##  Setup Instructions
 
-### ✅ 1. Backend Setup
+### 1. Backend Setup
 
 ```bash
 cd backend
@@ -55,7 +55,7 @@ pip install -r ../requirements.txt
 uvicorn cooksmith_api:app --reload --port 8000
 ```
 
-### ✅ 2. Frontend Setup
+### 2. Frontend Setup
 
 ```bash
 cd cooksmith-frontend
@@ -63,7 +63,7 @@ npm install
 npm start
 ```
 
-### 🗂️ Optional: Add Recipe ZIP
+### Optional: Add Recipe ZIP
 Place your `recipes_data.zip` in the `data/` folder. Run the CLI app to extract and process:
 
 ```bash
@@ -72,7 +72,7 @@ python run_app.py
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 ### LLM Workflow (Router Agent)
 
@@ -93,7 +93,7 @@ python run_app.py
 
 ---
 
-## 📊 Analytics & History
+## Analytics & History
 
 - Explore transformation history
 - Review past Q&A sessions
@@ -101,7 +101,7 @@ python run_app.py
 
 ---
 
-## 🔐 Environment Setup
+## Environment Setup
 
 Create a `.env` file in your `backend/` folder:
 
@@ -111,7 +111,7 @@ GOOGLE_API_KEY=your_google_gemini_api_key_here
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
 ### Backend
 
@@ -127,7 +127,7 @@ npm install
 
 ---
 
-## 🧑‍🍳 Built With
+## Built With
 
 - React + Tailwind + Framer Motion (Frontend)
 - FastAPI + SQLite + SQLAlchemy (Backend)
