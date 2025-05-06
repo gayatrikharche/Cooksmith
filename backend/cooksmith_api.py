@@ -58,9 +58,13 @@ def transform_recipe(recipe_text: str = Form(...), goal: str = Form(...)):
 # --- Ask a Question ---
 @app.post("/ask")
 def ask_question(recipe_json: str = Form(...), question: str = Form(...)):
+#    print(recipe_json)
+    with open(f"data/parsed/{recipe_json}", "r") as f:
+        json_data = json.load(f)
+#    json_data = ""
     prompt = (
         "You are a helpful AI chef. Use the structured recipe data below to answer the user's question.\n\n"
-        f"RECIPE DATA:\n{recipe_json}\n\n"
+        f"RECIPE DATA:\n{json_data}\n\n"
         f"QUESTION:\n{question}"
     )
     answer = call_llm(prompt)

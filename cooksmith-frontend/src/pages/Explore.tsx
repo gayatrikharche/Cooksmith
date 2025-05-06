@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+// const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const BASE_URL = "http://localhost:8000";
 
 export default function Explore() {
   const [structuredJSON, setStructuredJSON] = useState<string>("");
@@ -32,14 +33,14 @@ export default function Explore() {
       );
       setUploadMsg(res.data.message);
   
-      const filename = pdfFile.name.replace(/\.pdf$/, ".txt");
+      // const filename = pdfFile.name.replace(/\.pdf$/, ".json");
   
-      // ✅ This line fixes the "unknown" type error:
-      const textRes = await axios.get<string>(`/data/parsed/${filename}`, {
-        responseType: "text",
-      });
+      // // ✅ This line fixes the "unknown" type error:
+      // const textRes = await axios.get<string>(`../../../backend/data/parsed/${filename}`, {
+      //   responseType: "text",
+      // });
   
-      setStructuredJSON(textRes.data); // ✅ Now correctly typed
+      setStructuredJSON(pdfFile.name.replace(/\.pdf$/, ".json")); // ✅ Now correctly typed
     } catch (err) {
       setUploadMsg("❌ Upload failed or parsed text not found.");
     }
@@ -72,13 +73,7 @@ export default function Explore() {
         {uploadMsg && <p className="text-sm text-green-700">{uploadMsg}</p>}
       </div>
 
-      {/* Extracted or Pasted Recipe Text */}
-      <textarea
-        className="w-full h-40 p-4 border border-stone-300 rounded-lg shadow-inner font-mono text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
-        placeholder="Parsed recipe JSON or structured text will appear here..."
-        value={structuredJSON}
-        onChange={(e) => setStructuredJSON(e.target.value)}
-      />
+     
 
       {/* Ask a Question */}
       <input
