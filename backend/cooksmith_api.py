@@ -38,7 +38,7 @@ def upload_pdf(file: UploadFile):
     return {"message": "✅ PDF uploaded and parsed successfully."}
 
 
-# --- Transform a Recipe ---
+# Transform a Recipe 
 @app.post("/transform_explain")
 def transform_recipe(recipe_text: str = Form(...), goal: str = Form(...)):
     if recipe_text == "":

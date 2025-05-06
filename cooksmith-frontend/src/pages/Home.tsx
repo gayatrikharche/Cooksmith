@@ -31,7 +31,7 @@ export default function Home() {
       //   responseType: "text",
       // });
       setReadyToTransform(true);
-      setStructuredJSON(pdfFile.name.replace(/\.pdf$/, ".json")); // ✅ Now correctly typed
+      setStructuredJSON(pdfFile.name.replace(/\.pdf$/, ".json")); 
     } catch (err) {
       setUploadMsg("❌ Upload failed or parsed text not found.");
     }

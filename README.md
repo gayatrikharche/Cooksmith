@@ -21,27 +21,36 @@ Cooksmith is a creative document processing app that ingests PDF recipes, parses
 
 ```
 Cooksmith/
-├── backend/
-│   ├── cooksmith_api.py
-│   ├── database.py
-│   ├── models.py
-│   └── ...
 ├── agents/
-│   ├── utils.py
+│   ├── llm_client.py
 │   ├── parser.py
 │   ├── router_agent.py
-│   ├── llm_client.py
+│   └── utils.py
+│
+├── backend/
+│   ├── cooksmith.db
+│   ├── cooksmith_api.py
+│   ├── db.py
+│   ├── explore_db.py
+│   ├── requirements.txt
+│   └── app.py
+│
+├── cooksmith-frontend/
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── tailwind.config.js
+│   └── tsconfig.json
+│
 ├── data/
 │   ├── recipes_data.zip
-│   └── parsed/
-├── cooksmith-frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   └── App.tsx
-│   └── public/
-│       └── bg-pattern.jpg
-├── requirements.txt
-└── README.md
+│   └── .gitignore
+│
+├── cooksmith_diag.jpg
+├── README.md
+└── requirements.txt
+
 ```
 
 ---

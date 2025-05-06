@@ -42,37 +42,37 @@ def format_recipe_dict(recipe: dict) -> str:
     output = []
 
     if title := recipe.get("title"):
-        output.append(f"🍽 Title: {title}")
+        output.append(f" Title: {title}")
 
     if servings := recipe.get("servings"):
-        output.append(f"🥣 Servings: {servings}")
+        output.append(f" Servings: {servings}")
 
     if prep := recipe.get("prep_time"):
-        output.append(f"⏱ Prep Time: {prep}")
+        output.append(f" Prep Time: {prep}")
 
     if ingredients := recipe.get("ingredients"):
-        output.append("\n🧂 Ingredients:")
+        output.append("\n Ingredients:")
         output.extend([f"- {ing}" for ing in ingredients])
 
     if instructions := recipe.get("instructions"):
-        output.append("\n👩‍🍳 Instructions:")
+        output.append("\n Instructions:")
         output.extend([f"{step}" for step in instructions])
 
     if nutrition := recipe.get("nutrition_facts"):
-        output.append("\n🍎 Nutrition Facts:")
+        output.append("\n Nutrition Facts:")
         for k, v in nutrition.items():
             output.append(f"{k.replace('_', ' ').capitalize()}: {v}")
 
     if variations := recipe.get("variations"):
-        output.append("\n✨ Variations:")
+        output.append("\n Variations:")
         output.extend([f"- {v}" for v in variations])
 
     if notes := recipe.get("notes"):
-        output.append("\n📝 Notes:")
+        output.append("\n Notes:")
         output.extend([f"- {n}" for n in notes])
 
     if pairings := recipe.get("recommended_pairings"):
-        output.append("\n🥗 Recommended Pairings:")
+        output.append("\n Recommended Pairings:")
         output.extend([f"- {p}" for p in pairings])
 
     return "\n".join(output)
