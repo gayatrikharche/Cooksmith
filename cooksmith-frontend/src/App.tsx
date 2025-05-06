@@ -6,6 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import History from "./pages/History";
+import Help from "./pages/Help"; 
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
               <Link to="/" className="text-stone-700 hover:text-amber-600 transition">Home</Link>
               <Link to="/explore" className="text-stone-700 hover:text-amber-600 transition">Explore</Link>
               <Link to="/history" className="text-stone-700 hover:text-amber-600 transition">History</Link>
+              <Link to="/help" className="text-stone-700 hover:text-amber-600 transition">Help</Link> {/* ✅ Add Help */}
             </div>
           </div>
         </nav>
@@ -35,6 +37,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/history" element={<History />} />
+              <Route path="/help" element={<Help />} /> {/* ✅ Add Help Route */}
             </Routes>
           </AnimatePresence>
         </main>

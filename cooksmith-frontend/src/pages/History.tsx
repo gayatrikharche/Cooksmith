@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-// const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 
 interface RecipeHistoryEntry {
   id: number;
