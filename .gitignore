@@ -1,5 +1,4 @@
-Data/raw
-Data/parsed
+Data/Recipes
 .DS_Store
 .env
 Backend/data

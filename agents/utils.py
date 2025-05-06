@@ -11,23 +11,20 @@ def unzip_recipes(zip_path: str, extract_to: str = "data/raw/") -> None:
     print(f"Unzipped files to {extract_to}")
 
 def extract_and_parse_single_pdf(pdf_path: str, output_json_path: str):
-    # Step 1: Extract text from PDF
     with fitz.open(pdf_path) as doc:
         text = "".join(page.get_text() for page in doc)
         
-    print(text)
+#    print(text)
 
-    # Step 2: Parse text into structured format
     parsed = parse_recipe_text(text)
     
 #    print(parsed)
 
-    # Step 3: Save to JSON
     os.makedirs(os.path.dirname(output_json_path), exist_ok=True)
     with open(output_json_path, "w", encoding="utf-8") as f:
         json.dump(parsed, f, indent=2)
 
-    print(f"✅ JSON saved to {output_json_path}")
+    print(f"JSON saved to {output_json_path}")
 
 
 def load_recipe(file_path: str) -> str:
