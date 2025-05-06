@@ -22,15 +22,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Upload and Parse ZIP of Recipes ---
 @app.post("/upload")
-def upload_zip(file: UploadFile):
-    zip_path = "data/recipes_data.zip"
-    with open(zip_path, "wb") as buffer:
+def upload_pdf(file: UploadFile):
+    os.makedirs("data/raw", exist_ok=True)
+    pdf_path = f"data/raw/{file.filename}"
+
+    with open(pdf_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-    unzip_recipes(zip_path)
-    extract_text_from_pdfs()
-    return {"message": "✅ Uploaded and parsed successfully."}
+
+    from agents.utils import extract_text_from_pdf  # make sure this is imported
+    extract_text_from_pdf(pdf_path)
+
+    return {"message": "✅ PDF uploaded and parsed successfully."}
+
 
 # --- Transform a Recipe ---
 @app.post("/transform_explain")
