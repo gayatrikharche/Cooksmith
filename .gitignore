@@ -2,6 +2,7 @@ Data/raw
 Data/parsed
 .DS_Store
 .env
+Backend/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

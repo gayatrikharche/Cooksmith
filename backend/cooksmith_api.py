@@ -2,11 +2,12 @@
 
 import sys
 import os
+import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from fastapi import FastAPI, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from agents.utils import unzip_recipes, extract_text_from_pdfs
+from agents.utils import unzip_recipes, extract_and_parse_single_pdf
 from agents.router_agent import route_recipe
 from agents.llm_client import call_llm
 from db import SessionLocal, TransformedRecipe, RecipeQnA
@@ -27,12 +28,12 @@ app.add_middleware(
 def upload_pdf(file: UploadFile):
     os.makedirs("data/raw", exist_ok=True)
     pdf_path = f"data/raw/{file.filename}"
+    parsed_path = f"data/parsed/{file.filename.split('.')[0]}.json"
 
     with open(pdf_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-
-    from agents.utils import extract_text_from_pdf  # make sure this is imported
-    extract_text_from_pdf(pdf_path)
+        
+    extract_and_parse_single_pdf(pdf_path, parsed_path)
 
     return {"message": "✅ PDF uploaded and parsed successfully."}
 
