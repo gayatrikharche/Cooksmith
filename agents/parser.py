@@ -40,13 +40,20 @@ def parse_recipe_text(text: str) -> Dict:
     if dir_start > -1:
         result["instructions"] = [line for line in lines[dir_start + 1:] if re.match(r"^\d+\.\s", line)]
 
-    # Extract nutrition facts
+    # Extract nutrition facts with calories fix
     nutrition = {}
+    calorie_flag = False
+
     for line in lines:
         if "Amount per serving" in line:
-            match = re.search(r"(\d+)$", line)
+            calorie_flag = True
+            continue
+        if calorie_flag:
+            match = re.search(r"(\d+)", line)
             if match:
                 nutrition["calories_per_serving"] = int(match.group(1))
+            calorie_flag = False
+
         if "Total Fat" in line:
             nutrition["total_fat"] = line.split("Total Fat")[-1].strip()
         if "Saturated Fat" in line:
@@ -95,3 +102,4 @@ def parse_recipe_text(text: str) -> Dict:
     result["recommended_pairings"] = [line for line in lines if "✪" in line]
 
     return result
+
