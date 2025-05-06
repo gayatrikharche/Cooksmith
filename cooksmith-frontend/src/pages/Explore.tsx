@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 
 const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+// const BASE_URL = "http://localhost:8000";
 
 
 export default function Explore() {
@@ -35,7 +36,6 @@ export default function Explore() {
   
       // const filename = pdfFile.name.replace(/\.pdf$/, ".json");
   
-      // // ✅ This line fixes the "unknown" type error:
       // const textRes = await axios.get<string>(`../../../backend/data/parsed/${filename}`, {
       //   responseType: "text",
       // });

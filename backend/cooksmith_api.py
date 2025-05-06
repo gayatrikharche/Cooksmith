@@ -41,7 +41,13 @@ def upload_pdf(file: UploadFile):
 # --- Transform a Recipe ---
 @app.post("/transform_explain")
 def transform_recipe(recipe_text: str = Form(...), goal: str = Form(...)):
-    result = route_recipe(recipe_text, goal)
+    if recipe_text == "":
+        return {"answer": "Please upload a file"}
+    with open(f"data/parsed/{recipe_text}", "r") as f:
+        json_data = json.load(f)
+        
+#    print(json_data)
+    result = route_recipe(json_data, goal)
     
     db = SessionLocal()
     db_obj = TransformedRecipe(
@@ -59,6 +65,8 @@ def transform_recipe(recipe_text: str = Form(...), goal: str = Form(...)):
 @app.post("/ask")
 def ask_question(recipe_json: str = Form(...), question: str = Form(...)):
 #    print(recipe_json)
+    if recipe_json == "":
+            return {"answer": "Please upload a file"}
     with open(f"data/parsed/{recipe_json}", "r") as f:
         json_data = json.load(f)
 #    json_data = ""
