@@ -4,6 +4,9 @@ Cooksmith is a creative document processing app that ingests PDF recipes, parses
 
 ---
 
+![Cooksmith Architecture Diagram](./cooksmith_diag.jpg)
+
+---
 ## Features
 
 -  Extract and parse recipe PDFs
