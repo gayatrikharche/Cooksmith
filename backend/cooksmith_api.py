@@ -17,7 +17,8 @@ app = FastAPI()
 # Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "https://cooksmith.vercel.app"],  # ✅ Add both dev and prod frontend
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
