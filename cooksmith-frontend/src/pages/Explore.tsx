@@ -24,22 +24,27 @@ export default function Explore() {
     if (!pdfFile) return;
     const formData = new FormData();
     formData.append("file", pdfFile);
-
+  
     try {
-      const res = await axios.post<{ message: string }>(`${BASE_URL}/upload`, formData);
+      const res = await axios.post<{ message: string }>(
+        `${BASE_URL}/upload`,
+        formData
+      );
       setUploadMsg(res.data.message);
-
-      // Try fetching the corresponding .txt file
+  
       const filename = pdfFile.name.replace(/\.pdf$/, ".txt");
-      const textRes = await axios.get(`/data/parsed/${filename}`, {
+  
+      // ✅ This line fixes the "unknown" type error:
+      const textRes = await axios.get<string>(`/data/parsed/${filename}`, {
         responseType: "text",
       });
-
-      setStructuredJSON(textRes.data); // parsed recipe text
+  
+      setStructuredJSON(textRes.data); // ✅ Now correctly typed
     } catch (err) {
       setUploadMsg("❌ Upload failed or parsed text not found.");
     }
   };
+  
 
   return (
     <motion.div
